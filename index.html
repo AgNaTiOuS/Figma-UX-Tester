@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma UX Tester</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="app-header">
+        <div class="header-left">
+            <h1>Figma UX Tester</h1>
+            <span class="header-tagline">AI-powered prototype feedback</span>
+        </div>
+        <div class="header-right">
+            <button id="api-key-btn" class="btn btn-small btn-outline">
+                🔑 API Key
+            </button>
+            <button id="saved-sessions-btn" class="btn btn-small btn-outline">
+                📁 Sessions
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== API KEY MODAL ===== -->
+    <!-- This is a pop-up box that appears when you click the API Key button -->
+    <div id="api-key-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Enter Your OpenAI API Key</h2>
+                <button id="close-api-modal" class="modal-close">&times;</button>
+            </div>
+            <p class="modal-description">
+                Your key is stored only in your browser's memory for this session.
+                It is never saved to any server or included in any code files.
+            </p>
+            <input
+                type="password"
+                id="api-key-input"
+                placeholder="sk-..."
+                class="input-field"
+            >
+            <div class="modal-actions">
+                <button id="save-api-key" class="btn btn-primary">Save Key</button>
+            </div>
+            <div id="api-key-status" class="status-message hidden"></div>
+        </div>
+    </div>
+
+    <!-- ===== SAVED SESSIONS MODAL ===== -->
+    <div id="sessions-modal" class="modal hidden">
+        <div class="modal-content modal-wide">
+            <div class="modal-header">
+                <h2>Saved Sessions</h2>
+                <button id="close-sessions-modal" class="modal-close">&times;</button>
+            </div>
+            <div id="sessions-list" class="sessions-list">
+                <p class="empty-state">No saved sessions yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="app-main">
+
+        <!-- LEFT PANEL: Controls -->
+        <aside class="panel panel-controls">
+            <h2 class="panel-title">Setup</h2>
+
+            <!-- Figma URL Input -->
+            <div class="control-group">
+                <label for="figma-url">Figma Prototype URL</label>
+                <input
+                    type="url"
+                    id="figma-url"
+                    placeholder="Paste your Figma share link here..."
+                    class="input-field"
+                >
+                <button id="load-figma-btn" class="btn btn-primary btn-full">
+                    Load Prototype
+                </button>
+            </div>
+
+            <!-- Persona Selector -->
+            <div class="control-group">
+                <label>Select Persona(s)</label>
+                <div id="persona-checklist" class="persona-checklist">
+                    <!-- Personas will be injected here by personas.js -->
+                    <!-- For now, here is a static placeholder -->
+                    <label class="persona-item">
+                        <input type="checkbox" value="sales-rep" checked>
+                        <div class="persona-info">
+                            <strong>Internal Sales Rep</strong>
+                            <span>Generic enterprise sales user</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Task Description -->
+            <div class="control-group">
+                <label for="task-description">Task / Scenario</label>
+                <textarea
+                    id="task-description"
+                    rows="5"
+                    placeholder="Describe the task the user is trying to accomplish. Example: 'You need to find a customer's renewal date and update their contract value.'"
+                    class="input-field"
+                ></textarea>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generate-btn" class="btn btn-accent btn-full">
+                🧠 Generate Feedback
+            </button>
+
+            <!-- Save Session Button -->
+            <button id="save-session-btn" class="btn btn-outline btn-full">
+                💾 Save Session
+            </button>
+        </aside>
+
+        <!-- RIGHT PANEL: Figma Embed -->
+        <section class="panel panel-figma">
+            <div id="figma-container" class="figma-container">
+                <div id="figma-placeholder" class="placeholder">
+                    <div class="placeholder-icon">📐</div>
+                    <h3>No Prototype Loaded</h3>
+                    <p>Paste a Figma prototype share link on the left and click "Load Prototype"</p>
+                </div>
+                <!-- The iframe will be injected here by figma.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== BOTTOM PANEL: Feedback Results ===== -->
+    <section class="panel panel-feedback">
+        <div class="feedback-header">
+            <h2 class="panel-title">Feedback Results</h2>
+            <div class="feedback-controls">
+                <button id="clear-feedback-btn" class="btn btn-small btn-outline">
+                    🗑️ Clear
+                </button>
+            </div>
+        </div>
+        <div id="feedback-container" class="feedback-container">
+            <div class="placeholder">
+                <div class="placeholder-icon">💬</div>
+                <h3>No Feedback Yet</h3>
+                <p>Load a prototype, describe a task, and click "Generate Feedback"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LOADING OVERLAY ===== -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p>Generating feedback... This may take 15–30 seconds.</p>
+    </div>
+
+    <!-- ===== JAVASCRIPT FILES ===== -->
+    <!-- These will be created in later stages -->
+    <script src="js/personas.js"></script>
+    <script src="js/figma.js"></script>
+    <script src="js/openai.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
